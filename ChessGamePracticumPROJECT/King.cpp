@@ -1,16 +1,8 @@
 #include "stdafx.h"
 #include "King.h"
-#include"IBoard.h"
-//************************************
-// Method:    King
-// FullName:  King::King
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
+#include "Board.h"
+
+
 King::King(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
 {
 	this->setName("King");
@@ -47,15 +39,15 @@ void King::getPossibleMoves( DynamicArray<Move*>* result)
 	DynamicArray<Move*> attackedPosition;
 
 	// row = i , col = j
-	for (int i = 0; i < GlobalVaribles::SIZE; i++)
+	for (int i = 0; i < max_position_size; i++)
 	{
-		for (int j = 0; j < GlobalVaribles::SIZE; j++)
+		for (int j = 0; j < max_position_size; j++)
 		{
-			if (board->isEmpty(i, j))
+			if (board->isSpotEmpty(i, j))
 			{
 				freePosition.push_back(new Position(i, j));
 			}
-			else if (!board->isEmpty(i, j)) {
+			else if (!board->isSpotEmpty(i, j)) {
 				if (this->position->getCol() != j && this->position->getRow() != i)
 				{
 					this->board->getFigure(i, j)->getPossibleMoves(&attackedPosition);
@@ -73,25 +65,25 @@ void King::getPossibleMoves( DynamicArray<Move*>* result)
 		// if the position is empty and not attacked
 		// if the position is enemy and not attacked 
 		isAttacked = false;
-		if (this->position->areValid(tempRow,tempCol))
+		if (this->position->isValid(tempRow,tempCol))
 		{
 
 			for (unsigned int i = 0; i < attackedPosition.get_size(); i++)
 			{
 
-				if (attackedPosition.get_ElementAtIndex(i)->getToRow() == tempRow
-					&& attackedPosition.get_ElementAtIndex(i)->getToCol() == tempCol)
+				if (attackedPosition.get_ElementAtIndex(i)->getDestinationRow() == tempRow
+					&& attackedPosition.get_ElementAtIndex(i)->getDestinationCol() == tempCol)
 				{
 					isAttacked = true;
 				}
 			}
 			// if the position is empty and not attacked
-			if (!isAttacked && board->isEmpty(tempRow, tempCol))
+			if (!isAttacked && board->isSpotEmpty(tempRow, tempCol))
 			{
 				result->push_back(new Move(this->position->getRow(), this->position->getCol(), tempRow, tempCol, false));
 			}
 			// if the position is enemy and not attacked 
-			if (!this->board->isEmpty(tempRow, tempCol) && !isAttacked)
+			if (!this->board->isSpotEmpty(tempRow, tempCol) && !isAttacked)
 			{
 				if (this->board->getFigure(tempRow, tempCol)->getColor() != this->getColor())
 				{

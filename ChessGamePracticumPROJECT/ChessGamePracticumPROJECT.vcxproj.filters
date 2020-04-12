@@ -33,9 +33,6 @@
     <ClInclude Include="targetver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="GlobalVariables.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Figure.h">
       <Filter>Header Files\Figures</Filter>
     </ClInclude>
@@ -78,20 +75,14 @@
     <ClInclude Include="ConsoleView.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="IBoard.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Core</Filter>
     </ClInclude>
-    <ClInclude Include="IGame.h">
-      <Filter>Header Files\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Square.h">
-      <Filter>Header Files\Figures</Filter>
-    </ClInclude>
     <ClInclude Include="IView.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Spot.h">
+      <Filter>Header Files\Figures</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -122,9 +113,6 @@
     <ClCompile Include="Position.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="Square.cpp">
-      <Filter>Source Files\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Bishop.cpp">
       <Filter>Source Files\Figures</Filter>
     </ClCompile>
@@ -140,14 +128,11 @@
     <ClCompile Include="ConsoleView.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="IBoard.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Core</Filter>
     </ClCompile>
-    <ClCompile Include="IGame.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Spot.cpp">
+      <Filter>Source Files\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

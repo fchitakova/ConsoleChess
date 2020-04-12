@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Horse.h"
-#include"IBoard.h"
+#include "Board.h"
 
 
 

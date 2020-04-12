@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Pawn.h"
-#include"IBoard.h"
+#include"Board.h"
 #include"Queen.h"
 
 //************************************
@@ -45,7 +45,7 @@ void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
 	curentColor = board->getFigure(row, col)->getColor();
 	int add = 1;
 	if (curentColor == WHITE) { add = -1; };
-	if (!board->isEmpty(row, col))
+	if (!board->isSpotEmpty(row, col))
 	{
 		for (unsigned int p = 0; p < 1; p++)
 		{
@@ -55,21 +55,21 @@ void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
 			tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
 			tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
 
-			if (position->areValid(tempRow, tempCol))
+			if (position->isValid(tempRow, tempCol))
 			{
 
-				if (board->isEmpty(tempRow, tempCol))
+				if (board->isSpotEmpty(tempRow, tempCol))
 				{
 					// if board is empty and attacking move is false
 					result->push_back(new Move(row, col, tempRow, tempCol));
 
-					if (board->isEmpty(tempRow + add, tempCol)) {
+					if (board->isSpotEmpty(tempRow + add, tempCol)) {
 						if (curentColor == WHITE && row == 6)
 						{
 							result->push_back(new Move(row, col, tempRow + add, tempCol));
 						}
 					}
-					if (board->isEmpty(tempRow + add, tempCol)) {
+					if (board->isSpotEmpty(tempRow + add, tempCol)) {
 						if (curentColor == BLACK && row == 1)
 						{
 							result->push_back(new Move(row, col, tempRow + add, tempCol));
@@ -93,7 +93,7 @@ void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
 
 				tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
 				tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
-				if (!board->isEmpty(tempRow, tempCol))
+				if (!board->isSpotEmpty(tempRow, tempCol))
 				{
 
 

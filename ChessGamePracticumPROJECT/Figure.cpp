@@ -1,7 +1,8 @@
 #include "stdafx.h"
 #include "Figure.h"
-#include"Position.h"
-#include"IBoard.h"
+#include "Position.h"
+#include "Board.h"
+
 #include<iostream>
 
 
@@ -25,7 +26,6 @@ Figure::Figure(Position* position, Color color, DynamicArray<Figure*>*din)
 	this->isTaken_m = false;
 	this->takenFigures = din;
 	this->turnTaken = -1;
-
 }
 
 //************************************
@@ -108,7 +108,7 @@ void Figure::setRow(int row)
 {
 	if (this->isTaken_m == false)
 	{
-		if (position->areValid(row, this->getCol()))
+		if (position->isValid(row, this->getCol()))
 		{
 			this->position->setRow(row);
 		}
@@ -126,7 +126,7 @@ void Figure::setCol(int col)
 {
 	if (this->isTaken_m == false)
 	{
-		if (position->areValid(this->getRow(), col))
+		if (position->isValid(this->getRow(), col))
 		{
 			this->position->setCol(col);
 		}
@@ -137,27 +137,27 @@ void Figure::setCol(int col)
 }
 
 //************************************
-// Method:    getTurnTaken
-// FullName:  Figure::getTurnTaken
+// Method:    getTurnNumber
+// FullName:  Figure::getTurnNumber
 // Access:    public 
 // Returns:   int
 // Qualifier: const
 //************************************
-int Figure::getTurnTaken() const
+int Figure::getTurnNumber() const
 {
 	/// if figure is not taken return -1
 	return this->turnTaken;
 }
 
 //************************************
-// Method:    setTurnTaken
-// FullName:  Figure::setTurnTaken
+// Method:    setTurnNumber
+// FullName:  Figure::setTurnNumber
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: int turn
 //************************************
-void Figure::setTurnTaken(int turn)
+void Figure::setTurnNumber(int turn)
 {
 	if (turn > 0)
 	{
@@ -178,7 +178,7 @@ void Figure::setTurnTaken(int turn)
 // Qualifier:
 // Parameter: IBoard * board
 //************************************
-bool Figure::setBoard(IBoard * board)
+bool Figure::setBoard(Board * board)
 {
 	if (board != nullptr)
 	{
@@ -231,14 +231,14 @@ void Figure::getTakenFiguresList(DynamicArray<Figure*>* res)
 }
 
 //************************************
-// Method:    pushTakenFigureList
-// FullName:  Figure::pushTakenFigureList
+// Method:    addToTakenList
+// FullName:  Figure::addToTakenList
 // Access:    public 
 // Returns:   void
 // Qualifier:
 // Parameter: Figure * fig
 //************************************
-void Figure::pushTakenFigureList(Figure * fig)
+void Figure::addToTakenList(Figure * fig)
 {
 	this->takenFigures->push_back(fig);
 }
@@ -280,14 +280,14 @@ bool Figure::move(int row, int col)
 	this->getPossibleMoves(&moves);
 	for (unsigned int i = 0; i < moves.get_size(); i++)
 	{
-		if (moves.get_ElementAtIndex(i)->getToRow() == row &&
-			moves.get_ElementAtIndex(i)->getToCol() == col)
+		if (moves.get_ElementAtIndex(i)->getDestinationRow() == row &&
+			moves.get_ElementAtIndex(i)->getDestinationCol() == col)
 		{
-			if ((board->isEmpty(row, col)) == true && (moves.get_ElementAtIndex(i)->getIsAttacking() == false))
+			if ((board->isSpotEmpty(row, col)) == true && (moves.get_ElementAtIndex(i)->getAttackingStatus() == false))
 			{
 				return true;
 			}
-			else if (!(board->isEmpty(row, col)) && moves.get_ElementAtIndex(i)->getIsAttacking()) {
+			else if (!(board->isSpotEmpty(row, col)) && moves.get_ElementAtIndex(i)->getAttackingStatus()) {
 				return true;
 			}
 		}
@@ -297,14 +297,14 @@ bool Figure::move(int row, int col)
 }
 
 //************************************
-// Method:    printStats
-// FullName:  Figure::printStats
+// Method:    printInfo
+// FullName:  Figure::printInfo
 // Access:    public 
 // Returns:   std::ostream&
 // Qualifier:
 // Parameter: std::ostream & os
 //************************************
-std::ostream& Figure::printStats(std::ostream & os)
+std::ostream& Figure::printInfo(std::ostream & os)
 {
 	Figure* el;
 	os << "Figure" << " Color:" << this->getColor() << " Name:" << this->getName() << " Capture figures:" << std::endl;
@@ -315,7 +315,7 @@ std::ostream& Figure::printStats(std::ostream & os)
 		os << i << std::endl
 			<< "Name: " << el->getName() << std::endl
 			<< "Color:" << el->getColor() << std::endl
-			<< "Turn taken:" << el->getTurnTaken() << std::endl;
+			<< "Turn taken:" << el->getTurnNumber() << std::endl;
 
 	}
 	os << std::endl << "--------------------------" << std::endl;
@@ -339,17 +339,17 @@ void Figure::getPossibleMoves(DynamicArray<Move*>* result)
 	curentColor = board->getFigure(row, col)->getColor();
 
 
-	if (!board->isEmpty(row, col))
+	if (!board->isSpotEmpty(row, col))
 	{
 		for (unsigned int p = 0; p < rules.get_size(); p++)
 		{
 			tempRow = row + rules.get_ElementAtIndex(p)->getRow();
 			tempCol = col + rules.get_ElementAtIndex(p)->getCol();
 
-			if (position->areValid(tempRow, tempCol))
+			if (position->isValid(tempRow, tempCol))
 			{
 
-				if (board->isEmpty(tempRow, tempCol))
+				if (board->isSpotEmpty(tempRow, tempCol))
 				{
 					// if board is empty and attacking move is false
 					result->push_back(new Move(row, col, tempRow, tempCol));

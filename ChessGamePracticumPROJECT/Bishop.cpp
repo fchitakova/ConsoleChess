@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Bishop.h"
-#include"IBoard.h"
+#include "Board.h"
 
 
 
@@ -55,10 +55,10 @@ void Bishop::getPossibleMoves(DynamicArray<Move*>* result)
 		colorCorrection = -1;
 	}
 
-	for (int i = 0; i < GlobalVaribles::SIZE ; i++)
+	for (int i = 0; i < max_position_size ; i++)
 	{
 
-		if (!board->isEmpty(row, col))
+		if (!board->isSpotEmpty(row, col))
 		{
 			for (unsigned int p = 0; p < rules.get_size(); p++)
 			{
@@ -69,10 +69,10 @@ void Bishop::getPossibleMoves(DynamicArray<Move*>* result)
 					tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
 					tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
 
-					if (position->areValid(tempRow, tempCol))
+					if (position->isValid(tempRow, tempCol))
 					{
 
-						if (board->isEmpty(tempRow, tempCol))
+						if (board->isSpotEmpty(tempRow, tempCol))
 						{
 							// if board is empty and attacking move is false
 							result->push_back(new Move(row, col, tempRow, tempCol));

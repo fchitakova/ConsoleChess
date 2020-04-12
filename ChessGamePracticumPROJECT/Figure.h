@@ -3,22 +3,19 @@
 #include"DynamicArray.h"
 #include"Move.h"
 
-
 #include<iostream>
-class IBoard;
+
+class Board;
 class Figure
 {
-private:
-	
+
 protected:
 	char* name;
-	IBoard * board;
+	Board * board;
 	Position* position;
 	DynamicArray<Position*> rules;
 	DynamicArray<Figure*>* takenFigures;
 private:
-
-	
 	Color color;
 	bool isTaken_m;
 	int turnTaken;
@@ -36,16 +33,16 @@ public:
 	int getCol()const;
 	void setRow(int row);
 	void setCol(int col);
-	int getTurnTaken()const;
-	void setTurnTaken(int turn);
-	bool setBoard(IBoard * board);
+	int getTurnNumber()const;
+	void setTurnNumber(int turn);
+	bool setBoard(Board * board);
 	bool isTaken()const;
 	void makeNonTaken();
 
 	
-	std::ostream& printStats(std::ostream& os);
+	std::ostream& printInfo(std::ostream& os);
 	void getTakenFiguresList(DynamicArray<Figure*>* res);
-	void pushTakenFigureList(Figure* fig);
+	void addToTakenList(Figure* figure);
 
 	void deleteLastTakenFigure();
 
@@ -56,7 +53,7 @@ public:
 	//Figure * getLastTakenFigureList();
 	
 	virtual bool move(int row, int col);
-	//void  printStats(std::ostream& os);
+	//void  printInfo(std::ostream& os);
 
 	 virtual void getPossibleMoves( DynamicArray<Move*>* result) ;
 	 virtual ~Figure();

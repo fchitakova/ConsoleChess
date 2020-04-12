@@ -7,13 +7,6 @@ private:
 	unsigned size;
 	unsigned capacity;
 
-	//************************************
-	// Method:    resize
-	// FullName:  DynamicArray<T>::resize
-	// Access:    private 
-	// Returns:   void
-	// Qualifier:
-	//************************************
 	void resize() {
 		capacity *= 2;
 		T* temp = new T[capacity];

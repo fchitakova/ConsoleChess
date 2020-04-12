@@ -1,6 +1,6 @@
 #include "stdafx.h"
 #include "Rook.h"
-#include"IBoard.h"
+#include"Board.h"
 
 
 
@@ -52,7 +52,7 @@ void Rook::getPossibleMoves( DynamicArray<Move*>* result)
 	for (unsigned int i = 0; i < 1; i++)
 	{
 
-		if (!board->isEmpty(row, col))
+		if (!board->isSpotEmpty(row, col))
 		{
 			for (unsigned int p = 0; p < rules.get_size(); p++)
 			{
@@ -63,10 +63,10 @@ void Rook::getPossibleMoves( DynamicArray<Move*>* result)
 					tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
 					tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
 
-					if (position->areValid(tempRow, tempCol))
+					if (position->isValid(tempRow, tempCol))
 					{
 
-						if (board->isEmpty(tempRow, tempCol))
+						if (board->isSpotEmpty(tempRow, tempCol))
 						{
 							// if board is empty and attacking move is false
 							result->push_back(new Move(row, col, tempRow, tempCol));

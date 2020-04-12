@@ -1,2 +1,3 @@
-﻿  Queen.cpp
-  ChessGamePracticumPROJECT.vcxproj -> C:\Users\Teodor\source\repos\ChessGamePracticumPROJECT\Debug\ChessGamePracticumPROJECT.exe
+﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(76,5): warning : Access to the path 'c:\users\fiffy\desktop\consolechess\chess-app\chessgamepracticumproject\debug\chessgam.678398d9.tlog\cl.command.1.tlog' is denied.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(76,5): warning : Access to the path 'c:\users\fiffy\desktop\consolechess\chess-app\chessgamepracticumproject\debug\chessgam.678398d9.tlog\cl.read.1.tlog' is denied.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(76,5): warning : Access to the path 'c:\users\fiffy\desktop\consolechess\chess-app\chessgamepracticumproject\debug\chessgam.678398d9.tlog\cl.write.1.tlog' is denied.
