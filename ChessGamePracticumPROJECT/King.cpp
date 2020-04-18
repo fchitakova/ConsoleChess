@@ -3,7 +3,7 @@
 #include "Board.h"
 
 
-King::King(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
+King::King(Position * position, Color color, vector<Figure*>* takenFigures) :Figure(position, color, takenFigures)
 {
 	this->setName("King");
 	// row col
@@ -25,18 +25,10 @@ King::King(Position * position, Color color, DynamicArray<Figure*>* takenFigures
 	this->rules.push_back(new Position(0, -1));
 }
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  King::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void King::getPossibleMoves( DynamicArray<Move*>* result)
+void King::getPossibleMoves( vector<Move*>* result)
 {
-	DynamicArray<Position*> freePosition;
-	DynamicArray<Move*> attackedPosition;
+	vector<Position*> freePosition;
+	vector<Move*> attackedPosition;
 
 	// row = i , col = j
 	for (int i = 0; i < max_position_size; i++)
@@ -58,21 +50,21 @@ void King::getPossibleMoves( DynamicArray<Move*>* result)
 	}
 	int tempRow, tempCol;
 	bool isAttacked = false;
-	for (unsigned int i = 0; i < rules.get_size(); i++)
+	for (unsigned int i = 0; i < rules.size(); i++)
 	{
-		tempRow = position->getRow() + this->rules.get_ElementAtIndex(i)->getRow();
-		tempCol = position->getCol() + this->rules.get_ElementAtIndex(i)->getCol();
+		tempRow = position->getRow() + this->rules.at(i)->getRow();
+		tempCol = position->getCol() + this->rules.at(i)->getCol();
 		// if the position is empty and not attacked
 		// if the position is enemy and not attacked 
 		isAttacked = false;
 		if (this->position->isValid(tempRow,tempCol))
 		{
 
-			for (unsigned int i = 0; i < attackedPosition.get_size(); i++)
+			for (unsigned int i = 0; i < attackedPosition.size(); i++)
 			{
 
-				if (attackedPosition.get_ElementAtIndex(i)->getDestinationRow() == tempRow
-					&& attackedPosition.get_ElementAtIndex(i)->getDestinationCol() == tempCol)
+				if (attackedPosition.at(i)->getDestinationRow() == tempRow
+					&& attackedPosition.at(i)->getDestinationCol() == tempCol)
 				{
 					isAttacked = true;
 				}

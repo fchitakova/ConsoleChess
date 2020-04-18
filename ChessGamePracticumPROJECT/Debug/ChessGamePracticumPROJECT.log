@@ -1,3 +1,19 @@
-﻿C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(76,5): warning : Access to the path 'c:\users\fiffy\desktop\consolechess\chess-app\chessgamepracticumproject\debug\chessgam.678398d9.tlog\cl.command.1.tlog' is denied.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(76,5): warning : Access to the path 'c:\users\fiffy\desktop\consolechess\chess-app\chessgamepracticumproject\debug\chessgam.678398d9.tlog\cl.read.1.tlog' is denied.
-C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\MSBuild\Microsoft\VC\v160\Microsoft.CppClean.targets(76,5): warning : Access to the path 'c:\users\fiffy\desktop\consolechess\chess-app\chessgamepracticumproject\debug\chessgam.678398d9.tlog\cl.write.1.tlog' is denied.
+﻿  stdafx.cpp
+  Bishop.cpp
+  Board.cpp
+C:\Users\Fiffy\Desktop\ConsoleChess\Chess-App\ChessGamePracticumPROJECT\Board.cpp(123,10): warning C4101: 'temp': unreferenced local variable
+  ChessGamePracticumPROJECT.cpp
+  ConsoleView.cpp
+  Figure.cpp
+  Game.cpp
+  Horse.cpp
+  King.cpp
+  Move.cpp
+  Pawn.cpp
+  Position.cpp
+  Queen.cpp
+  Rook.cpp
+  Spot.cpp
+  View.cpp
+  Generating Code...
+  ChessGamePracticumPROJECT.vcxproj -> C:\Users\Fiffy\Desktop\ConsoleChess\Chess-App\Debug\ChessGamePracticumPROJECT.exe

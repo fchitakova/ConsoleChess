@@ -16,7 +16,7 @@
 // Parameter: Color color
 // Parameter: DynamicArray<Figure * > * takenFigures
 //************************************
-Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
+Bishop::Bishop(Position * position, Color color, vector<Figure*>* takenFigures) :Figure(position, color, takenFigures)
 {
 
 	this->setName("Bishop");
@@ -33,15 +33,8 @@ Bishop::Bishop(Position * position, Color color, DynamicArray<Figure*>* takenFig
 	this->rules.push_back(new Position(-1, -1));
 }
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  Bishop::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void Bishop::getPossibleMoves(DynamicArray<Move*>* result)
+
+void Bishop::getPossibleMoves(vector<Move*>* result)
 {
 	bool flag = true;
 	int row, col, tempRow, tempCol, colorCorrection;
@@ -60,14 +53,14 @@ void Bishop::getPossibleMoves(DynamicArray<Move*>* result)
 
 		if (!board->isSpotEmpty(row, col))
 		{
-			for (unsigned int p = 0; p < rules.get_size(); p++)
+			for (unsigned int p = 0; p < rules.size(); p++)
 			{
 				flag = true;
 				int add = 1;
 				while (flag)
 				{
-					tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-					tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
+					tempRow = row + add * (rules.at(p)->getRow());
+					tempCol = col + add * (rules.at(p)->getCol());
 
 					if (position->isValid(tempRow, tempCol))
 					{

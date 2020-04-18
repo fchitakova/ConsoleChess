@@ -1,4 +1,9 @@
 # Prerequisites
+
+ChessGamePracticumPROJECT/Debug/*
+.vs/*
+Debug/*
+
 *.d
 
 # Compiled Object files

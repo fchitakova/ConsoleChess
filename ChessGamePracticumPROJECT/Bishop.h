@@ -7,9 +7,9 @@ class Bishop :
 public:
 	Bishop() = delete;
 	Bishop(Bishop&) = delete;
-	Bishop(Position* position, Color color, DynamicArray<Figure*>* takenFigures);
+	Bishop(Position* position, Color color, vector<Figure*>* takenFigures);
 	Bishop& operator =(Bishop&) = delete;
-	void getPossibleMoves(DynamicArray<Move*>* result) override;
+	void getPossibleMoves(vector<Move*>* result) override;
 	virtual ~Bishop();
 };
 

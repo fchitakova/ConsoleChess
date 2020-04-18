@@ -3,17 +3,8 @@
 #include"Board.h"
 #include"Queen.h"
 
-//************************************
-// Method:    Pawn
-// FullName:  Pawn::Pawn
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-Pawn::Pawn(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
+
+Pawn::Pawn(Position * position, Color color, vector<Figure*>* takenFigures) :Figure(position, color, takenFigures)
 {
 	this->setName("Pawn");
 	// the first move is the non attacking
@@ -26,15 +17,7 @@ Pawn::Pawn(Position * position, Color color, DynamicArray<Figure*>* takenFigures
 }
 
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  Pawn::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
+void Pawn::getPossibleMoves(vector<Move*>* result)
 {
 
 	bool flag = true;
@@ -52,8 +35,8 @@ void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
 			flag = true;
 
 
-			tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-			tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
+			tempRow = row + add * (rules.at(p)->getRow());
+			tempCol = col + add * (rules.at(p)->getCol());
 
 			if (position->isValid(tempRow, tempCol))
 			{
@@ -91,8 +74,8 @@ void Pawn::getPossibleMoves(DynamicArray<Move*>* result)
 			{
 
 
-				tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-				tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
+				tempRow = row + add * (rules.at(p)->getRow());
+				tempCol = col + add * (rules.at(p)->getCol());
 				if (!board->isSpotEmpty(tempRow, tempCol))
 				{
 

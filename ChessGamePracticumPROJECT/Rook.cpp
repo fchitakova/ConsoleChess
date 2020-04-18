@@ -6,17 +6,8 @@
 
 
 
-//************************************
-// Method:    Rook
-// FullName:  Rook::Rook
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-Rook::Rook(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
+
+Rook::Rook(Position * position, Color color, vector<Figure*>* takenFigures) :Figure(position, color, takenFigures)
 {
 	this->setName("Rook");
 	// row col
@@ -32,15 +23,8 @@ Rook::Rook(Position * position, Color color, DynamicArray<Figure*>* takenFigures
 	this->rules.push_back(new Position(0, 1));
 }
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  Rook::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void Rook::getPossibleMoves( DynamicArray<Move*>* result)
+
+void Rook::getPossibleMoves( vector<Move*>* result)
 {
 	bool flag = true;
 	int row, col, tempRow, tempCol;
@@ -54,14 +38,14 @@ void Rook::getPossibleMoves( DynamicArray<Move*>* result)
 
 		if (!board->isSpotEmpty(row, col))
 		{
-			for (unsigned int p = 0; p < rules.get_size(); p++)
+			for (unsigned int p = 0; p < rules.size(); p++)
 			{
 				flag = true;
 				int add = 1;
 				while (flag)
 				{
-					tempRow = row + add * (rules.get_ElementAtIndex(p)->getRow());
-					tempCol = col + add * (rules.get_ElementAtIndex(p)->getCol());
+					tempRow = row + add * (rules.at(p)->getRow());
+					tempCol = col + add * (rules.at(p)->getCol());
 
 					if (position->isValid(tempRow, tempCol))
 					{

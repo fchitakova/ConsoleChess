@@ -3,17 +3,12 @@
 #include"Board.h"
 
 
-
-
-
 Game::Game(IView* view)
 {
 	this->view = view;
 	this->board = new Board();
 	this->lastMove = new Move();
 	this->turnCounter = 0;
-
-
 }
 
 
@@ -28,14 +23,14 @@ bool Game::move(int x1, int y1, int x2, int y2)
 	{
 		if (this->board->getFigure(x1, y1)->move(x2, y2))
 		{
-			DynamicArray<Move*> arr;
+			vector<Move*> arr;
 			this->board->getFigure(x1, y1)->getPossibleMoves(&arr);
-			for (unsigned int i = 0; i < arr.get_size(); i++)
+			for (unsigned int i = 0; i < arr.size(); i++)
 			{
-				if (arr.get_ElementAtIndex(i)->getDestinationRow() == x2 && arr.get_ElementAtIndex(i)->getDestinationCol() == y2)
+				if (arr.at(i)->getDestinationRow() == x2 && arr.at(i)->getDestinationCol() == y2)
 				{
 					turnCounter++;
-					if (arr.get_ElementAtIndex(i)->getAttackingStatus())
+					if (arr.at(i)->getAttackingStatus())
 					{
 						// the move is attacking othre figure
 						board->getFigure(x2, y2)->setTurnNumber(turnCounter);
@@ -84,7 +79,7 @@ bool Game::move(int x1, int y1, int x2, int y2)
 					// throw fatal logic exception
 
 					//std::cerr << "Error Game figure moves" << std::endl;
-					//return false;
+	 				//return false;
 				}
 			}
 			//this->board->
@@ -209,11 +204,6 @@ void Game::undo()
 
 	if (this->lastMove->getAttackingStatus())
 	{
-
-		// Bad practice - call getters multiple  times - use local variable
-		// saves time in future code refactoring/ editting/
-		// makes the code reusable
-		DynamicArray<Figure*>* taken = new DynamicArray<Figure*>();
 		Figure* attacking = this->board->getFigure(this->lastMove->getDestinationRow(), this->lastMove->getDestinationCol());
 
 		Figure* attacked = attacking->getLastTakenFigure();

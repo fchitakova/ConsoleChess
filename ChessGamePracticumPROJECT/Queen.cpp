@@ -7,32 +7,15 @@
 
 
 
-//************************************
-// Method:    Queen
-// FullName:  Queen::Queen
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures), Rook(position, color, takenFigures),Bishop(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-Queen::Queen(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures),
+Queen::Queen(Position * position, Color color, vector<Figure*>* takenFigures) :Figure(position, color, takenFigures),
 Rook(position, color, takenFigures),Bishop(position, color, takenFigures)
 {
 	
 	this->setName("Queen");
 }
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  Queen::getPossibleMoves
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void Queen::getPossibleMoves(DynamicArray<Move*>* result)
+
+void Queen::getPossibleMoves(vector<Move*>* result)
 {
 
 

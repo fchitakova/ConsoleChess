@@ -9,32 +9,16 @@
 
 #pragma warning(disable : 4996)
 
-//************************************
-// Method:    Figure
-// FullName:  Figure::Figure
-// Access:    public 
-// Returns:   
-// Qualifier:
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * din
-//************************************
-Figure::Figure(Position* position, Color color, DynamicArray<Figure*>*din)
+Figure::Figure(Position* position, Color color, vector<Figure*>*din)
 {
 	this->position = position;
 	this->color = color;
 	this->isTaken_m = false;
-	this->takenFigures = din;
+	this->takenFigures = *din;
 	this->turnTaken = -1;
 }
 
-//************************************
-// Method:    getName
-// FullName:  Figure::getName
-// Access:    public 
-// Returns:   char *
-// Qualifier: const
-//************************************
+
 char *  Figure::getName() const
 {
 	char* result = new char[strlen(this->name) + 1];
@@ -42,14 +26,6 @@ char *  Figure::getName() const
 	return result;
 }
 
-//************************************
-// Method:    setName
-// FullName:  Figure::setName
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: const char * name
-//************************************
 void Figure::setName(const char * name)
 {
 	if (this->name != nullptr)
@@ -60,50 +36,25 @@ void Figure::setName(const char * name)
 	strcpy(this->name, name);
 }
 
-//************************************
-// Method:    getColor
-// FullName:  Figure::getColor
-// Access:    public 
-// Returns:   Color
-// Qualifier: const
-//************************************
+
 Color Figure::getColor() const
 {
 	return this->color;
 }
 
-//************************************
-// Method:    getRow
-// FullName:  Figure::getRow
-// Access:    public 
-// Returns:   int
-// Qualifier: const
-//************************************
+
 int Figure::getRow() const
 {
 	return this->position->getRow();
 }
 
-//************************************
-// Method:    getCol
-// FullName:  Figure::getCol
-// Access:    public 
-// Returns:   int
-// Qualifier: const
-//************************************
+
 int Figure::getCol() const
 {
 	return this->position->getCol();
 }
 
-//************************************
-// Method:    setRow
-// FullName:  Figure::setRow
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: int row
-//************************************
+
 void Figure::setRow(int row)
 {
 	if (this->isTaken_m == false)
@@ -114,14 +65,7 @@ void Figure::setRow(int row)
 		}
 	}
 }
-//************************************
-// Method:    setCol
-// FullName:  Figure::setCol
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: int col
-//************************************
+
 void Figure::setCol(int col)
 {
 	if (this->isTaken_m == false)
@@ -170,14 +114,7 @@ void Figure::setTurnNumber(int turn)
 
 }
 
-//************************************
-// Method:    setBoard
-// FullName:  Figure::setBoard
-// Access:    public 
-// Returns:   bool
-// Qualifier:
-// Parameter: IBoard * board
-//************************************
+
 bool Figure::setBoard(Board * board)
 {
 	if (board != nullptr)
@@ -189,105 +126,55 @@ bool Figure::setBoard(Board * board)
 
 }
 
-//************************************
-// Method:    isTaken
-// FullName:  Figure::isTaken
-// Access:    public 
-// Returns:   bool
-// Qualifier: const
-//************************************
+
 bool Figure::isTaken() const
 {
 	return this->isTaken_m;
 }
 
-//************************************
-// Method:    makeNonTaken
-// FullName:  Figure::makeNonTaken
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
 void Figure::makeNonTaken()
 {
 	this->isTaken_m = false;
 }
 
-
-
-//************************************
-// Method:    getTakenFiguresList
-// FullName:  Figure::getTakenFiguresList
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Figure * > * res
-//************************************
-void Figure::getTakenFiguresList(DynamicArray<Figure*>* res)
+void Figure::getTakenFiguresList(vector<Figure*>* res)
 {
 	/// results of this function may be result call non constant members unsafe
 	/// might lead to program crash 
-	*res = *(this->takenFigures);
+	res = &takenFigures;
 }
 
-//************************************
-// Method:    addToTakenList
-// FullName:  Figure::addToTakenList
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: Figure * fig
-//************************************
+
 void Figure::addToTakenList(Figure * fig)
 {
-	this->takenFigures->push_back(fig);
-}
-//************************************
-// Method:    deleteLastTakenFigure
-// FullName:  Figure::deleteLastTakenFigure
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
-void Figure::deleteLastTakenFigure()
-{
-	this->takenFigures->remove_by_index(takenFigures->get_size() - 1);
-}
-//************************************
-// Method:    getLastTakenFigure
-// FullName:  Figure::getLastTakenFigure
-// Access:    public 
-// Returns:   Figure::Figure*
-// Qualifier:
-//************************************
-Figure* Figure::getLastTakenFigure()
-{
-	return this->takenFigures->get_ElementAtIndex(takenFigures->get_size() - 1);
+	takenFigures.push_back(fig);
 }
 
-//************************************
-// Method:    move
-// FullName:  Figure::move
-// Access:    virtual public 
-// Returns:   bool
-// Qualifier:
-// Parameter: int row
-// Parameter: int col
-//************************************
+void Figure::deleteLastTakenFigure()
+{
+	takenFigures.erase(takenFigures.end() - 1);
+}
+
+Figure* Figure::getLastTakenFigure()
+{
+	return takenFigures.at(takenFigures.size() - 1);
+}
+
+
 bool Figure::move(int row, int col)
 {
-	DynamicArray<Move*> moves;
+	vector<Move*> moves;
 	this->getPossibleMoves(&moves);
-	for (unsigned int i = 0; i < moves.get_size(); i++)
+	for (unsigned int i = 0; i < moves.size(); i++)
 	{
-		if (moves.get_ElementAtIndex(i)->getDestinationRow() == row &&
-			moves.get_ElementAtIndex(i)->getDestinationCol() == col)
+		if (moves.at(i)->getDestinationRow() == row &&
+			moves.at(i)->getDestinationCol() == col)
 		{
-			if ((board->isSpotEmpty(row, col)) == true && (moves.get_ElementAtIndex(i)->getAttackingStatus() == false))
+			if ((board->isSpotEmpty(row, col)) == true && (moves.at(i)->getAttackingStatus() == false))
 			{
 				return true;
 			}
-			else if (!(board->isSpotEmpty(row, col)) && moves.get_ElementAtIndex(i)->getAttackingStatus()) {
+			else if (!(board->isSpotEmpty(row, col)) && moves.at(i)->getAttackingStatus()) {
 				return true;
 			}
 		}
@@ -296,22 +183,15 @@ bool Figure::move(int row, int col)
 
 }
 
-//************************************
-// Method:    printInfo
-// FullName:  Figure::printInfo
-// Access:    public 
-// Returns:   std::ostream&
-// Qualifier:
-// Parameter: std::ostream & os
-//************************************
+
 std::ostream& Figure::printInfo(std::ostream & os)
 {
 	Figure* el;
 	os << "Figure" << " Color:" << this->getColor() << " Name:" << this->getName() << " Capture figures:" << std::endl;
-	for (unsigned int i = 0; i < this->takenFigures->get_size(); i++)
+	for (unsigned int i = 0; i < takenFigures.size(); i++)
 	{
 		os << ". --------------------------" << std::endl;
-		el = this->takenFigures->get_ElementAtIndex(i);
+		el = takenFigures.at(i);
 		os << i << std::endl
 			<< "Name: " << el->getName() << std::endl
 			<< "Color:" << el->getColor() << std::endl
@@ -322,15 +202,8 @@ std::ostream& Figure::printInfo(std::ostream & os)
 	return os;
 }
 
-//************************************
-// Method:    getPossibleMoves
-// FullName:  Figure::getPossibleMoves
-// Access:    virtual public 
-// Returns:   void
-// Qualifier:
-// Parameter: DynamicArray<Move * > * result
-//************************************
-void Figure::getPossibleMoves(DynamicArray<Move*>* result)
+
+void Figure::getPossibleMoves(vector<Move*>* result)
 {
 	int row, col, tempRow, tempCol;
 	Color curentColor;
@@ -341,10 +214,10 @@ void Figure::getPossibleMoves(DynamicArray<Move*>* result)
 
 	if (!board->isSpotEmpty(row, col))
 	{
-		for (unsigned int p = 0; p < rules.get_size(); p++)
+		for (unsigned int p = 0; p < rules.size(); p++)
 		{
-			tempRow = row + rules.get_ElementAtIndex(p)->getRow();
-			tempCol = col + rules.get_ElementAtIndex(p)->getCol();
+			tempRow = row + rules.at(p)->getRow();
+			tempCol = col + rules.at(p)->getCol();
 
 			if (position->isValid(tempRow, tempCol))
 			{

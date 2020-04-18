@@ -9,8 +9,8 @@ public:
 	Pawn() = delete;
 	Pawn& operator =(Pawn&) = delete;
 	Pawn(Pawn&) = delete;
-	Pawn(Position* position, Color color, DynamicArray<Figure*>* takenFigures);
-	void getPossibleMoves( DynamicArray<Move*>* result)  override;
+	Pawn(Position* position, Color color, vector<Figure*>* takenFigures);
+	void getPossibleMoves( vector<Move*>* result)  override;
 	void evolveToQueen() {
 		throw std::exception("Not implemented");
 	}

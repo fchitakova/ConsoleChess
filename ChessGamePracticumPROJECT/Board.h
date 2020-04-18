@@ -11,8 +11,8 @@
 class Board
 {
 	Spot** board;
-	DynamicArray< DynamicArray<Figure*>*>* arraysToDelete;
-	DynamicArray<Figure*>*  figuresToDelete;
+	vector<vector<Figure*>*> * arraysToDelete;
+	vector<Figure*> * figuresToDelete;
 
 public:
 	Board();

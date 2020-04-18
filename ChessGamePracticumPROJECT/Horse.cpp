@@ -7,17 +7,8 @@
 
 
 
-//************************************
-// Method:    Horse
-// FullName:  Horse::Horse
-// Access:    public 
-// Returns:   
-// Qualifier: :Figure(position, color, takenFigures)
-// Parameter: Position * position
-// Parameter: Color color
-// Parameter: DynamicArray<Figure * > * takenFigures
-//************************************
-Horse::Horse(Position * position, Color color, DynamicArray<Figure*>* takenFigures) :Figure(position, color, takenFigures)
+
+Horse::Horse(Position * position, Color color, vector<Figure*>* takenFigures) :Figure(position, color, takenFigures)
 {
 	this->setName("Horse");
 	// row col
