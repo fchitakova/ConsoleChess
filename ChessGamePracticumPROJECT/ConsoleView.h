@@ -5,7 +5,7 @@ class ConsoleView :
 	public View
 {
 public:
-	std::ostream* s;
+	std::ostream* outputStream;
 	HANDLE hConsole;
 	char king[10][12] = {
 		"  =||=    ",
@@ -98,7 +98,7 @@ public:
 	void readCommand(char* command)override;
 	std::ostream& getStream() override;
 
-	ConsoleView(std::ostream& s);
+	ConsoleView(std::ostream& outputStream);
 
 	void printRowQueen(int n, Color color);
 	void printRowBishop(int n, Color color);

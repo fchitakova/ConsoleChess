@@ -13,12 +13,15 @@ private:
 	int turnCounter;
 
 public:
-
 	Game(IView* view);
-	bool move(int x1, int y1, int x2, int y2);
+	~Game();
+
+	bool move(int startRow, int startCol, int destinationRow, int destinationCol);
 	void startGame();
 	void printInfoForSpot(int x1, int x2);
 	void undo();
-	virtual ~Game();
+
+private:
+	void changeFigurePositionInBoard(Figure* figure, int destinationRow, int destinationCol);
 };
 

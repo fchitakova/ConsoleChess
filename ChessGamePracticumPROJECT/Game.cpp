@@ -12,95 +12,47 @@ Game::Game(IView* view)
 }
 
 
-bool Game::move(int x1, int y1, int x2, int y2)
+bool Game::move(int startRow, int startCol, int destinationRow, int destinationCol)
 {
-
-	// READ BEFORE EDIT
-	// CLASS BOARD AND FIGURE ARE TIGHT COUPled
-	// you should update board position, and figure coordinates
-	// we identify every figure uniquely by it's last coordinates, not by id !
-	if (!this->board->isSpotEmpty(x1, y1))
+	if (board->isSpotEmpty(startRow, startCol)) 
 	{
-		if (this->board->getFigure(x1, y1)->move(x2, y2))
-		{
-			vector<Move*> arr;
-			this->board->getFigure(x1, y1)->getPossibleMoves(&arr);
-			for (unsigned int i = 0; i < arr.size(); i++)
-			{
-				if (arr.at(i)->getDestinationRow() == x2 && arr.at(i)->getDestinationCol() == y2)
-				{
-					turnCounter++;
-					if (arr.at(i)->getAttackingStatus())
-					{
-						// the move is attacking othre figure
-						board->getFigure(x2, y2)->setTurnNumber(turnCounter);
-						this->board->getFigure(x1, y1)->addToTakenList(board->getFigure(x2, y2));
-						// move the attacking figure to new position
-						board->placeFigure(board->getFigure(x1, y1),x2, y2);
-						board->removeFigureFromSpot(x1, y1);
-						// update attacking figure new coordinates
-						// every figure knows it's coordinates
-						board->getFigure(x2, y2)->setRow(x2);
-						board->getFigure(x2, y2)->setCol(y2);
-
-
-						// update lastMove for undo function
-						this->lastMove->setStartingRow(x1);
-						this->lastMove->setStartingCol(y1);
-
-						this->lastMove->setDestinationRow(x2);
-						this->lastMove->setDestionationCol(y2);
-						this->lastMove->setAttackStatus(true);
-						return true;
-
-					}
-					else {
-						//the move is over free position
-						board->placeFigure(board->getFigure(x1, y1),x2, y2);
-						board->removeFigureFromSpot(x1, y1);
-
-						// update attacking figure new coordinates
-						// every figure knows it's coordinates
-						board->getFigure(x2, y2)->setRow(x2);
-						board->getFigure(x2, y2)->setCol(y2);
-
-						// update lastMove for undo function
-						this->lastMove->setStartingRow(x1);
-						this->lastMove->setStartingCol(y1);
-
-						this->lastMove->setDestinationRow(x2);
-						this->lastMove->setDestionationCol(y2);
-						this->lastMove->setAttackStatus(false);
-						return true;
-					}
-
-				}
-				else {
-					// throw fatal logic exception
-
-					//std::cerr << "Error Game figure moves" << std::endl;
-	 				//return false;
-				}
-			}
-			//this->board->
-			return false;
-		}
-		else if (strcmp(this->board->getFigure(x1, y1)->getName(), "King") == 0) {
-			view->printMessage("The position you try to move is occupied or under attack,or you could not move that way");
-			return false;
-		}
-		else {
-			view->printMessage("The position you try to move is occupied or you could not move that way");
-			return false;
-		}
-
-
-	}
-	else {
 		view->printMessage("you selected empty cell");
 		return false;
 	}
 
+	Figure* figureToMove = this->board->getFigure(startRow, startCol);
+	if (!figureToMove->isMoveAllowed(destinationRow, destinationCol))
+	{
+		view->printMessage("The position you try to move is occupied or you could not move that way");
+		return false;
+	}
+
+	bool isDestinationSpotTakenByOponent = board->isSpotEmpty(destinationRow, destinationCol) 
+			&& board->getFigure(destinationRow, destinationCol)->getColor() != figureToMove->getColor();
+	
+	turnCounter++;
+
+	bool attackStatus = false;
+	if (!isDestinationSpotTakenByOponent)
+	{
+	    Figure* takenFigure = board->getFigure(destinationRow, destinationCol);
+		figureToMove->addToTakenList(takenFigure);
+		takenFigure->makeTaken(turnCounter);
+		attackStatus = true;
+	}	
+
+	this->lastMove->setStartPosition(startRow, startCol);
+	this->lastMove->setDestinationPosition(destinationRow, destinationCol);
+	this->lastMove->setAttackStatus(attackStatus);
+	
+	return true;
+}
+
+
+void Game::changeFigurePositionInBoard(Figure* figure, int destinationRow, int destinationCol) {
+	this->board->placeFigure(figure, destinationRow, destinationCol);
+
+	this->board->removeFigureFromSpot(figure->getCurrentPosition, startCol);
 }
 
 
@@ -185,7 +137,7 @@ void Game::printInfoForSpot(int x1, int x2)
 	{
 		board->getFigure(x1, x2)->printInfo(view->getStream());
 		/*
-			board->getFigure(x1, x2)->getTakenFiguresList(taken);
+			board->getFigure(x1, x2)->getTakenFigures(taken);
 			for ( int i = 0; i <taken->get_size() ; i++)
 			{
 				taken->get_ElementAtIndex(i)->printInfo(view->getStream()) ;
@@ -201,12 +153,11 @@ void Game::printInfoForSpot(int x1, int x2)
 void Game::undo()
 {
 
-
-	if (this->lastMove->getAttackingStatus())
+	if (this->lastMove->isAttacking())
 	{
 		Figure* attacking = this->board->getFigure(this->lastMove->getDestinationRow(), this->lastMove->getDestinationCol());
 
-		Figure* attacked = attacking->getLastTakenFigure();
+		Figure* attacked = &attacking->getLastTakenFigure();
 		attacked->makeNonTaken();
 		attacking->deleteLastTakenFigure();
 		this->board->placeFigure(attacked,lastMove->getDestinationRow(), lastMove->getDestinationCol());
@@ -216,11 +167,9 @@ void Game::undo()
 		// Alternative solution->keep unique id for each figure (We may have more than one figure instance of each Type)
 
 		*/
-		attacked->setRow(lastMove->getDestinationRow());
-		attacked->setCol(lastMove->getDestinationCol());
+		attacked->setPosition(lastMove->getDestinationRow(), lastMove->getDestinationCol());
 		this->board->placeFigure(attacking,this->lastMove->getStartingRow(), this->lastMove->getStartingCol());
-		attacking->setRow(this->lastMove->getStartingRow());
-		attacking->setCol(this->lastMove->getStartingCol());
+		attacking->setPosition(lastMove->getStartingRow(), lastMove->getStartingCol());
 		attacked = nullptr;
 		attacking = nullptr;
 
@@ -228,8 +177,7 @@ void Game::undo()
 	else {
 		Figure* moving = this->board->getFigure(this->lastMove->getDestinationRow(), this->lastMove->getDestinationCol());
 		this->board->placeFigure(moving,lastMove->getStartingRow(), lastMove->getStartingCol());
-		moving->setRow(lastMove->getStartingRow());
-		moving->setCol(lastMove->getStartingCol());
+		moving->setPosition(lastMove->getStartingRow(), lastMove->getStartingCol());
 		this->board->removeFigureFromSpot(this->lastMove->getDestinationRow(), this->lastMove->getDestinationCol());
 		moving = nullptr;
 	}

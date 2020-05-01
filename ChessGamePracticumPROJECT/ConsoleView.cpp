@@ -12,7 +12,7 @@ void ConsoleView::printRowKing(int n, Color color)
 	if (color == BLACK) {
 		SetConsoleTextAttribute(this->hConsole, 12);
 	}
-	*s << king[n];
+	*outputStream << king[n];
 	SetConsoleTextAttribute(this->hConsole, 15);
 }
 
@@ -22,7 +22,7 @@ void ConsoleView::printRowQueen(int n, Color color)
 	if (color == BLACK) {
 		SetConsoleTextAttribute(this->hConsole, 12);
 	}
-	*s << queen[n];
+	*outputStream << queen[n];
 	SetConsoleTextAttribute(this->hConsole, 15);
 }
 
@@ -32,7 +32,7 @@ void ConsoleView::printRowBishop(int n, Color color)
 	if (color == BLACK) {
 		SetConsoleTextAttribute(this->hConsole, 12);
 	}
-	*s << bishop[n];
+	*outputStream << bishop[n];
 	SetConsoleTextAttribute(this->hConsole, 15);
 }
 
@@ -42,7 +42,7 @@ void ConsoleView::printRowHorse(int n, Color color)
 	if (color == BLACK) {
 		SetConsoleTextAttribute(this->hConsole, 12);
 	}
-	*s << horse[n];
+	*outputStream << horse[n];
 	SetConsoleTextAttribute(this->hConsole, 15);
 }
 
@@ -52,7 +52,7 @@ void ConsoleView::printRowRook(int n, Color color)
 	if (color == BLACK) {
 		SetConsoleTextAttribute(this->hConsole, 12);
 	}
-	*s << rook[n];
+	*outputStream << rook[n];
 	SetConsoleTextAttribute(this->hConsole, 15);
 }
 
@@ -62,7 +62,7 @@ void ConsoleView::printRowPawn(int n, Color color)
 	if (color == BLACK) {
 		SetConsoleTextAttribute(this->hConsole, 12);
 	}
-	*s << pawn[n];
+	*outputStream << pawn[n];
 	SetConsoleTextAttribute(this->hConsole, 15);
 }
 
@@ -71,11 +71,9 @@ void ConsoleView::printRowPawn(int n, Color color)
 
 void ConsoleView::printBoard(Board * board)
 {
-	char* figName;
-	Color figColor;
 	for (int row = 0; row < 8; row++)
 	{
-		*s << row;
+		*outputStream << row;
 		for (int printRow = 0; printRow < 10; printRow++)
 		{
 
@@ -83,51 +81,52 @@ void ConsoleView::printBoard(Board * board)
 			for (int col = 0; col < max_position_size; col++)
 			{
 				if (printRow == 0) {
-					*s << col << ' ' << ' ';
+					*outputStream << col << ' ' << ' ';
 				}
 				else {
-					*s << ' ' << ' ';
+					*outputStream << ' ' << ' ';
 				}
 
 				if (!board->isSpotEmpty(row, col)) {
-					// the board position is non empty
-					figName = board->getFigure(row, col)->getName();
-					figColor = board->getFigure(row, col)->getColor();
-					if (!strcmp(figName, "Pawn")) { printRowPawn(printRow, figColor); }
-					else if (!strcmp(figName, "Rook")) { printRowRook(printRow, figColor); }
-					else if (!strcmp(figName, "Bishop")) { printRowBishop(printRow, figColor); }
-					else if (!strcmp(figName, "Horse")) { printRowHorse(printRow, figColor); }
-					else if (!strcmp(figName, "Queen")) { printRowQueen(printRow, figColor); }
-					else if (!strcmp(figName, "King")) { printRowKing(printRow, figColor); }
+
+					string figureName = board->getFigure(row, col)->getName();
+					Color figureColor = board->getFigure(row, col)->getColor();
+
+					if (!figureName.compare( "Pawn")) { printRowPawn(printRow, figureColor); }
+					else if (!figureName.compare("Rook")) { printRowRook(printRow, figureColor); }
+					else if (!figureName.compare("Bishop")) { printRowBishop(printRow, figureColor); }
+					else if (!figureName.compare("Horse")) { printRowHorse(printRow, figureColor); }
+					else if (!figureName.compare("Queen")) { printRowQueen(printRow, figureColor); }
+					else if (!figureName.compare("King")) { printRowKing(printRow, figureColor); }
 					else {
 						assert(false);
 					}
 				}
 				else {
 					if (printRow == 0) {
-						*s << "          ";
+						*outputStream << "          ";
 					}
 
 					else {
-						*s << "           ";
+						*outputStream << "           ";
 					}
 
 				}
 				//if (printRow != 0 && col == 0) { std::cout << "&"; }
-				*s << "|";
+				*outputStream << "|";
 
 
 			}
 			// printrow closes here
 
-			*s << std::endl;
-			*s << " ";
+			*outputStream << std::endl;
+			*outputStream << " ";
 		}
 
 		for (int k = 0; k < max_position_size; k++) {
-			*s << "_____________.";
+			*outputStream << "_____________.";
 		}
-		*s << std::endl;
+		*outputStream << std::endl;
 		// row iterator closes here
 	}
 }
@@ -135,7 +134,7 @@ void ConsoleView::printBoard(Board * board)
 
 void ConsoleView::printMessage(const char * message)
 {
-	*s << message << std::endl;
+	*outputStream << message << std::endl;
 }
 
 
@@ -146,13 +145,13 @@ void ConsoleView::readCommand(char * command)
 
 std::ostream & ConsoleView::getStream()
 {
-	return *s;
+	return *outputStream;
 }
 
 
-ConsoleView::ConsoleView(std::ostream& s)
+ConsoleView::ConsoleView(std::ostream& outputStream)
 {
-	this->s = &s;
+	this->outputStream = &outputStream;
 
 	this->hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 }
