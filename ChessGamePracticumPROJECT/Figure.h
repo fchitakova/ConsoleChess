@@ -12,56 +12,43 @@ class Figure
 {
 protected:
 	char* name;
-	Board * board;
-	Position* position;
-	vector<Position*> rules;
-	vector<Figure*> takenFigures;
-private:
-	Color color;
-	bool isTaken_m;
+	bool taken;
 	int turnTaken;
 
-public:
-	Figure() = delete;
-	Figure& operator =(Figure&) = delete;
-	Figure(Figure&) = delete;
+	Board * board;
+	Position* currentPosition;
+	Color color;
 
-	Figure(Position* position, Color color, vector<Figure*>*);
-	char*  getName() const;
-	void  setName(const char* name);
-	Color getColor()const;
-	int getRow() const;
-	int getCol()const;
-	void setRow(int row);
-	void setCol(int col);
-	int getTurnNumber()const;
-	void setTurnNumber(int turn);
-	bool setBoard(Board * board);
-	bool isTaken()const;
+	vector<Position> movementRules;
+	vector<Figure> takenFigures;
+
+public:
+	Figure();
+	Figure(Board*chessBoard,Color color,Position* position);
+	Figure(const Figure&);
+	Figure& operator =(const Figure&);
+	~Figure();
+
+	void setPosition(int row,int col);
+	void makeTaken(int turn);
 	void makeNonTaken();
 
-	
-	std::ostream& printInfo(std::ostream& os);
-	void getTakenFiguresList(vector<Figure*>* res);
+	char* getName()const;
+	Color getColor()const;
+	Position* getCurrentPosition()const;
+
+	bool isTaken()const;
+	bool isMoveAllowed(int destionationRow, int destinationColumn);
+
+	vector<Figure> getTakenFigures();
+	Figure getLastTakenFigure();
 	void addToTakenList(Figure* figure);
-
 	void deleteLastTakenFigure();
-
-	//void deleteLastTakenFigureL();
-
-	Figure * getLastTakenFigure();
-
-	//Figure * getLastTakenFigureList();
 	
-	virtual bool move(int row, int col);
-	//void  printInfo(std::ostream& os);
-
-	 virtual void getPossibleMoves(vector<Move*>*result);
-	 virtual ~Figure();
+	void printInfo(std::ostream& os);
 
 protected:
-	//Figure();
-	//virtual void setPosition(Position* position) =0;
-
+	void setMovementRules(const vector<Position>movementRules);
+	void setName(const char* name);
 };
 

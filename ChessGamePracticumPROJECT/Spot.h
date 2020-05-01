@@ -4,15 +4,18 @@
 class Spot
 {
 private:
+	Position* spotPosition;
 	Figure* figure;
 public:
 	Spot();
-	Spot& operator =(Spot&) = delete;
-	Spot(Spot&) = delete;
-	bool isSpotEmpty() const;
+	~Spot();
+
 	void setFigure(Figure* figure);
+	void setPosition(Position* spotPosition);
+
 	Figure* getFigure()const;
-	Figure* removeFigure();
-	 ~Spot();
+	bool isSpotEmpty() const;
+
+	void removeFigure();
 };
 

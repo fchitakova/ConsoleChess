@@ -7,21 +7,16 @@
 
 Move::Move()
 {
-	this->to = new Position(0, 0);
-	this->from = new Position(0, 0);
+	this->startPosition = new Position(0, 0);
+	this->destinationPosition = new Position(0, 0);
 }
 
 
-Move::Move(int rowFrom, int colFrom, int rowTo, int colTo, bool isAttacking)
+Move::Move(int rowFrom, int colFrom, int rowTo, int colTo, bool attackStatus)
 {
-	this->to = new Position(0, 0);
-
-	this->from = new Position(0, 0);
-	setDestinationRow(rowTo);
-	setDestionationCol(colTo);
-	setStartingCol(colFrom);
-	setStartingRow(rowFrom);
-	this->isAttacking = isAttacking;
+	this->startPosition = new Position(rowFrom, colFrom);
+	this->destinationPosition = new Position(rowTo, colTo);
+	this->attackStatus = attackStatus;
 }
 
 
@@ -29,73 +24,60 @@ Move::Move(int rowFrom, int colFrom, int rowTo, int colTo, bool isAttacking)
 
 int Move::getStartingRow()const
 {
-	return from->getRow();
+	return startPosition->getRow();
 }
 
 int Move::getDestinationRow()const
 {
-	return to->getRow();
+	return destinationPosition->getRow();
 }
 
 
 int Move::getStartingCol()const
 {
-	return from->getCol();
+	return startPosition->getCol();
 }
 
 
 int Move::getDestinationCol()const
 {
-	return to->getCol();
+	return destinationPosition->getCol();
 }
 
 
-bool Move::getAttackingStatus() const
+bool Move::isAttacking() const
 {
-	return this->isAttacking;
+	return this->attackStatus;
 }
 
 
-void Move::setStartingRow(int row)
+void Move::setStartPosition(int row,int col)
 {
-	from->setRow(row);
+	startPosition->setPosition(row, col);
+}
+
+void Move::setDestinationPosition(int row, int col) {
+	destinationPosition->setPosition(row, col);
 }
 
 
-void Move::setDestinationRow(int row)
+void Move::setAttackStatus(bool attackStatus)
 {
-	to->setRow(row);
-}
-
-
-void Move::setStartingCol(int col)
-{
-	from->setCol(col);
-}
-
-
-void Move::setDestionationCol(int col)
-{
-	to->setCol(col);
-}
-
-void Move::setAttackStatus(bool isAttacking)
-{
-	this->isAttacking = isAttacking;
+	this->attackStatus = attackStatus;
 }
 
 void Move::printLogs() {
-	std::cout << " from row:" << getStartingRow() << std::endl;
-	std::cout << " from col:" << getStartingCol() << std::endl;
+	std::cout << " startPosition row:" << getStartingRow() << std::endl;
+	std::cout << " startPosition col:" << getStartingCol() << std::endl;
 
-	std::cout << " to row:" << getDestinationRow() << std::endl;
-	std::cout << " to col:" << getDestinationCol() << std::endl;
-	std::cout << "is Attacking move:" << getAttackingStatus() << std::endl;
+	std::cout << " destinationPosition row:" << getDestinationRow() << std::endl;
+	std::cout << " destinationPosition col:" << getDestinationCol() << std::endl;
+	std::cout << "is Attacking move:" << isAttacking() << std::endl;
 	std::cout << std::endl;
 	std::cout << std::endl;
 }
 Move::~Move()
 {
-	delete to;
-	delete from;
+	delete destinationPosition;
+	delete startPosition;
 }

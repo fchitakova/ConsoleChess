@@ -4,11 +4,13 @@ class Horse :
 	public Figure
 {
 public:
-	Horse() = delete;
-	Horse& operator =(Horse&) = delete;
-	Horse(Horse&) = delete;
-	Horse(Position* position, Color color, vector<Figure*>* takenFigures);
-	//virtual void getPossibleMoves(Board* board, DynamicArray<Move*>* result)  ;
-	virtual ~Horse();
+	const char* horse_figure_name = "Horse";
+
+	Horse();
+	Horse(Board* chessBoard, Color color, Position* position);
+	Horse(const Horse& otherHorse);
+	Horse& operator=(const Horse& otherHorse);
+	~Horse();
+
 };
 

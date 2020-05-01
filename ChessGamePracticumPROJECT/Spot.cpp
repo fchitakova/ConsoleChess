@@ -2,35 +2,45 @@
 #include "Spot.h"
 
 
-bool Spot::isSpotEmpty() const
-{
-	return this->figure == nullptr;
+Spot::Spot() {
+	this->figure = nullptr;
+	this->spotPosition = nullptr;
+}
+
+
+Spot::~Spot() {
+	if (spotPosition!=nullptr) {
+		delete spotPosition;
+	}
+	if (figure != nullptr) {
+		delete figure;
+	}
 }
 
 void Spot::setFigure(Figure* figure)
 {
 	this->figure = figure;
+	this->spotPosition = figure->getCurrentPosition();
 }
 
+void Spot::setPosition(Position* spotPosition) {
+	this->spotPosition = spotPosition;
+}
 
-Figure * Spot::getFigure() const
+Figure* Spot::getFigure() const
 {
 	return this->figure;
 }
 
-Figure * Spot::removeFigure()
+bool Spot::isSpotEmpty() const
 {
-	Figure* result = this->figure;
+	return this->figure == nullptr;
+}
+
+
+
+void Spot::removeFigure()
+{
 	this->figure = nullptr;
-	return result;
 }
 
-Spot::Spot(){
-	this->figure = NULL;
-}
-
-
- Spot::~Spot()
-{
-	 std::cout << "delete square";
-}

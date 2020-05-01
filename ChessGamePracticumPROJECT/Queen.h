@@ -1,19 +1,13 @@
 #pragma once
 #include "Figure.h"
-#include"Bishop.h"
-#include"Rook.h"
-class Queen :
-	public Rook, public Bishop
-{
-	/// Class queen shares one array for storing moves with Rook  and Bishop constructor
-	
+
+class Queen :public Figure {
 public:
-	Queen() = delete;
-	Queen& operator =(Queen&) = delete;
-	Queen(Queen&) = delete;
+	const char* queen_figure_name = "Queen";
 
-	Queen(Position* position, Color color, vector<Figure*>* takenFigures);
-	void getPossibleMoves( vector<Move*>* result)  override;
-	virtual ~Queen();
+	Queen();
+	Queen(Board* chessBoard, Color color, Position* position);
+	Queen(const Queen& otherQueen);
+	Queen& operator=(const Queen& otherQueen);
+	~Queen();
 };
-

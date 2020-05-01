@@ -10,19 +10,23 @@
 
 class Board
 {
+private:
 	Spot** board;
-	vector<vector<Figure*>*> * arraysToDelete;
-	vector<Figure*> * figuresToDelete;
 
 public:
 	Board();
 	~Board();
-	bool isSpotEmpty(int row, int col);
-	Figure* getFigure(int row, int col);
-	bool placeFigure(Figure* ,int row, int col);
-	bool removeFigureFromSpot(int row, int col);
-private:
-	void placeFigures();
 
+	bool isSpotEmpty(int row, int col);
+	bool isSpotValid(int row, int col);
+	Figure* getFigure(int row, int col);
+
+	bool placeFigure(Figure*figure, int row, int col);
+	void removeFigureFromSpot(int row, int col);
+
+private:
+	void allocateBoardMemory();
+	void initializeBoardPositions();
+	void placeFigures();
 };
 
