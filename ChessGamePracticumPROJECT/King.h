@@ -4,11 +4,12 @@ class King :
 	public Figure
 {
 public:
-	King() = delete;
-	King& operator =(King&) = delete;
-	King(King&) = delete;
-	King(Position* position, Color color, DynamicArray<Figure*>* takenFigures);
-	void getPossibleMoves( DynamicArray<Move*>* result)  override;
-	virtual~King();
+	const char* king_figure_name = "King";
+
+	King();
+	King(Board* chessBoard, Color color, Position* position);
+	King(const King& otherKing);
+	King& operator=(const King& otherKing);
+	~King();
 };
 

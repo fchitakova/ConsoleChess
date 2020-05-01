@@ -1,69 +1,54 @@
 #pragma once
 #include"Color.h"
-#include"DynamicArray.h"
 #include"Move.h"
 
-
+#include <vector>
 #include<iostream>
-class IBoard;
+
+using namespace std;
+
+class Board;
 class Figure
 {
-private:
-	
 protected:
 	char* name;
-	IBoard * board;
-	Position* position;
-	DynamicArray<Position*> rules;
-	DynamicArray<Figure*>* takenFigures;
-private:
-
-	
-	Color color;
-	bool isTaken_m;
+	bool taken;
 	int turnTaken;
 
-public:
-	Figure() = delete;
-	Figure& operator =(Figure&) = delete;
-	Figure(Figure&) = delete;
+	Board * board;
+	Position* currentPosition;
+	Color color;
 
-	Figure(Position* position, Color color, DynamicArray<Figure*>*);
-	char*  getName() const;
-	void  setName(const char* name);
-	Color getColor()const;
-	int getRow() const;
-	int getCol()const;
-	void setRow(int row);
-	void setCol(int col);
-	int getTurnTaken()const;
-	void setTurnTaken(int turn);
-	bool setBoard(IBoard * board);
-	bool isTaken()const;
+	vector<Position> movementRules;
+	vector<Figure> takenFigures;
+
+public:
+	Figure();
+	Figure(Board*chessBoard,Color color,Position* position);
+	Figure(const Figure&);
+	Figure& operator =(const Figure&);
+	~Figure();
+
+	void setPosition(int row,int col);
+	void makeTaken(int turn);
 	void makeNonTaken();
 
-	
-	std::ostream& printStats(std::ostream& os);
-	void getTakenFiguresList(DynamicArray<Figure*>* res);
-	void pushTakenFigureList(Figure* fig);
+	char* getName()const;
+	Color getColor()const;
+	Position* getCurrentPosition()const;
 
+	bool isTaken()const;
+	bool isMoveAllowed(int destionationRow, int destinationColumn);
+
+	vector<Figure> getTakenFigures();
+	Figure getLastTakenFigure();
+	void addToTakenList(Figure* figure);
 	void deleteLastTakenFigure();
-
-	//void deleteLastTakenFigureL();
-
-	Figure * getLastTakenFigure();
-
-	//Figure * getLastTakenFigureList();
 	
-	virtual bool move(int row, int col);
-	//void  printStats(std::ostream& os);
-
-	 virtual void getPossibleMoves( DynamicArray<Move*>* result) ;
-	 virtual ~Figure();
+	void printInfo(std::ostream& os);
 
 protected:
-	//Figure();
-	//virtual void setPosition(Position* position) =0;
-
+	void setMovementRules(const vector<Position>movementRules);
+	void setName(const char* name);
 };
 

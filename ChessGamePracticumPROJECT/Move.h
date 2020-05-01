@@ -2,26 +2,25 @@
 #include"Position.h"
 class Move
 {
-	Position* from;
-	Position* to;
-	bool isAttacking;
+private:
+	Position* startPosition;
+	Position* destinationPosition;
+	bool attackStatus;
 public:
-	int getFromRow()const;
-	int getToRow()const;
-	int getFromCol()const;
-	int getToCol()const;
-	bool getIsAttacking()const;
-
-	void setFromRow(int row);
-	void setToRow(int row);
-	void setFromCol(int col);
-	void setToCol(int col);
-	void setIsAttacking(bool isAttacking);
-
-	void logToConsole();
-
 	Move();
-	Move(int rowFrom, int colFrom, int rowTo, int colTo, bool isAttacking = false);
-	 ~Move();
+	Move(int rowFrom, int colFrom, int rowTo, int colTo, bool attackStatus = false);
+	~Move();
+
+	int getStartingRow()const;
+	int getDestinationRow()const;
+	int getStartingCol()const;
+	int getDestinationCol()const;
+	bool isAttacking()const;
+
+	void setStartPosition(int row, int col);
+	void setDestinationPosition(int row, int col);
+	void setAttackStatus(bool attackStatus);
+
+	void printLogs();
 };
 

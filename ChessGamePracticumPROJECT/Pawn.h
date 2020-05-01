@@ -6,14 +6,11 @@ class Pawn :
 	public Figure
 {
 public:
-	Pawn() = delete;
-	Pawn& operator =(Pawn&) = delete;
-	Pawn(Pawn&) = delete;
-	Pawn(Position* position, Color color, DynamicArray<Figure*>* takenFigures);
-	void getPossibleMoves( DynamicArray<Move*>* result)  override;
-	void evolveToQueen() {
-		throw std::exception("Not implemented");
-	}
-	virtual ~Pawn();
-};
+	const char* pawn_figure_name = "Pawn";
 
+	Pawn();
+	Pawn(Board* chessBoard, Color color, Position* position);
+	Pawn(const Pawn& otherPawn);
+	Pawn& operator=(const Pawn& otherKing);
+	~Pawn();
+};

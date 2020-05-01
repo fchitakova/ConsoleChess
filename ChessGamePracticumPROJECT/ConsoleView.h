@@ -79,13 +79,6 @@ public:
 		" /      \\  ",
 		"|________| ",
 	};
-public:
-	void printRowQueen(int n, Color color);
-	void printRowBishop(int n, Color color);
-	void printRowHorse(int n, Color color);
-	void printRowRook(int n, Color color);
-	void printRowPawn(int n, Color color);
-
 	// init
 	/*void initRowQueen();
 	void initRowBishop();
@@ -97,14 +90,23 @@ public:
 	ConsoleView() = delete;
 	ConsoleView& operator =(ConsoleView&) = delete;
 	ConsoleView(ConsoleView&) = delete;
+	virtual ~ConsoleView();
+
 	void printRowKing(int n, Color color);
-	void printBoard(IBoard* board) override;
-	void printMessageNL(const char*) override;
+	void printBoard(Board* board) override;
+	void printMessage(const char*) override;
 	void readCommand(char* command)override;
 	std::ostream& getStream() override;
 
 	ConsoleView(std::ostream& s);
+
+	void printRowQueen(int n, Color color);
+	void printRowBishop(int n, Color color);
+	void printRowHorse(int n, Color color);
+	void printRowRook(int n, Color color);
+	void printRowPawn(int n, Color color);
+
 	
-	virtual ~ConsoleView();
+
 };
 

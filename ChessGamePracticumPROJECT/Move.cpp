@@ -4,187 +4,80 @@
 #include<iostream>
 
 
-//************************************
-// Method:    Move
-// FullName:  Move::Move
-// Access:    public 
-// Returns:   
-// Qualifier:
-//************************************
+
 Move::Move()
 {
-	this->to = new Position(0, 0);
-	this->from = new Position(0, 0);
+	this->startPosition = new Position(0, 0);
+	this->destinationPosition = new Position(0, 0);
 }
-//************************************
-// Method:    Move
-// FullName:  Move::Move
-// Access:    public 
-// Returns:   
-// Qualifier:
-// Parameter: int rowFrom
-// Parameter: int colFrom
-// Parameter: int rowTo
-// Parameter: int colTo
-// Parameter: bool isAttacking
-//************************************
-Move::Move(int rowFrom, int colFrom, int rowTo, int colTo, bool isAttacking)
+
+
+Move::Move(int rowFrom, int colFrom, int rowTo, int colTo, bool attackStatus)
 {
-	this->to = new Position(0, 0);
-
-	this->from = new Position(0, 0);
-	setToRow(rowTo);
-	setToCol(colTo);
-	setFromCol(colFrom);
-	setFromRow(rowFrom);
-	this->isAttacking = isAttacking;
+	this->startPosition = new Position(rowFrom, colFrom);
+	this->destinationPosition = new Position(rowTo, colTo);
+	this->attackStatus = attackStatus;
 }
 
 
 
 
-//************************************
-// Method:    getFromRow
-// FullName:  Move::getFromRow
-// Access:    public 
-// Returns:   int
-// Qualifier: const
-//************************************
-int Move::getFromRow()const
+int Move::getStartingRow()const
 {
-	return from->getRow();
+	return startPosition->getRow();
 }
 
-//************************************
-// Method:    getToRow
-// FullName:  Move::getToRow
-// Access:    public 
-// Returns:   int
-// Qualifier: const
-//************************************
-int Move::getToRow()const
+int Move::getDestinationRow()const
 {
-	return to->getRow();
+	return destinationPosition->getRow();
 }
 
-//************************************
-// Method:    getFromCol
-// FullName:  Move::getFromCol
-// Access:    public 
-// Returns:   int
-// Qualifier: const
-//************************************
-int Move::getFromCol()const
+
+int Move::getStartingCol()const
 {
-	return from->getCol();
+	return startPosition->getCol();
 }
 
-//************************************
-// Method:    getToCol
-// FullName:  Move::getToCol
-// Access:    public 
-// Returns:   int
-// Qualifier: const
-//************************************
-int Move::getToCol()const
+
+int Move::getDestinationCol()const
 {
-	return to->getCol();
+	return destinationPosition->getCol();
 }
 
-//************************************
-// Method:    getIsAttacking
-// FullName:  Move::getIsAttacking
-// Access:    public 
-// Returns:   bool
-// Qualifier: const
-//************************************
-bool Move::getIsAttacking() const
+
+bool Move::isAttacking() const
 {
-	return this->isAttacking;
+	return this->attackStatus;
 }
 
-//************************************
-// Method:    setFromRow
-// FullName:  Move::setFromRow
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: int row
-//************************************
-void Move::setFromRow(int row)
+
+void Move::setStartPosition(int row,int col)
 {
-	from->setRow(row);
+	startPosition->setPosition(row, col);
 }
 
-//************************************
-// Method:    setToRow
-// FullName:  Move::setToRow
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: int row
-//************************************
-void Move::setToRow(int row)
-{
-	to->setRow(row);
+void Move::setDestinationPosition(int row, int col) {
+	destinationPosition->setPosition(row, col);
 }
 
-//************************************
-// Method:    setFromCol
-// FullName:  Move::setFromCol
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: int col
-//************************************
-void Move::setFromCol(int col)
+
+void Move::setAttackStatus(bool attackStatus)
 {
-	from->setCol(col);
+	this->attackStatus = attackStatus;
 }
 
-//************************************
-// Method:    setToCol
-// FullName:  Move::setToCol
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: int col
-//************************************
-void Move::setToCol(int col)
-{
-	to->setCol(col);
-}
-//************************************
-// Method:    setIsAttacking
-// FullName:  Move::setIsAttacking
-// Access:    public 
-// Returns:   void
-// Qualifier:
-// Parameter: bool isAttacking
-//************************************
-void Move::setIsAttacking(bool isAttacking)
-{
-	this->isAttacking = isAttacking;
-}
-//************************************
-// Method:    logToConsole
-// FullName:  Move::logToConsole
-// Access:    public 
-// Returns:   void
-// Qualifier:
-//************************************
-void Move::logToConsole() {
-	std::cout << " from row:" << getFromRow() << std::endl;
-	std::cout << " from col:" << getFromCol() << std::endl;
+void Move::printLogs() {
+	std::cout << " startPosition row:" << getStartingRow() << std::endl;
+	std::cout << " startPosition col:" << getStartingCol() << std::endl;
 
-	std::cout << " to row:" << getToRow() << std::endl;
-	std::cout << " to col:" << getToCol() << std::endl;
-	std::cout << "is Attacking move:" << getIsAttacking() << std::endl;
+	std::cout << " destinationPosition row:" << getDestinationRow() << std::endl;
+	std::cout << " destinationPosition col:" << getDestinationCol() << std::endl;
+	std::cout << "is Attacking move:" << isAttacking() << std::endl;
 	std::cout << std::endl;
 	std::cout << std::endl;
 }
 Move::~Move()
 {
-	delete to;
-	delete from;
+	delete destinationPosition;
+	delete startPosition;
 }

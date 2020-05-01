@@ -1,28 +1,32 @@
 #pragma once
 
-#include"Square.h"
-#include"GlobalVariables.h"
-#include"IBoard.h"
-#include"Figure.h"
+#include"Spot.h"
+#include"King.h"
+#include"Queen.h"
+#include"Bishop.h"
+#include"Horse.h"
+#include"Rook.h"
+#include"Pawn.h"
 
-//class Figure;
-class Board : public IBoard
+class Board
 {
-
-	//void initSquares();
-	Square** board;
-	DynamicArray< DynamicArray<Figure*> *> * arraysToDelete;
-	DynamicArray<Figure*>*  figuresToDelete;
+private:
+	Spot** board;
 
 public:
-
-	
-	void placeFigures() override;
-	bool isEmpty(int row, int col)	override;
-	Figure* getFigure(int row, int col)	override;
-	bool setFigure(int row, int col, Figure*)	override;
-	bool makeTileEmpty(int row, int col) override;
 	Board();
-	 ~Board();
+	~Board();
+
+	bool isSpotEmpty(int row, int col);
+	bool isSpotValid(int row, int col);
+	Figure* getFigure(int row, int col);
+
+	bool placeFigure(Figure*figure, int row, int col);
+	void removeFigureFromSpot(int row, int col);
+
+private:
+	void allocateBoardMemory();
+	void initializeBoardPositions();
+	void placeFigures();
 };
 
