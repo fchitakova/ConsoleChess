@@ -1,8 +1,10 @@
 # Prerequisites
 
 ChessGamePracticumPROJECT/Debug/*
+ChessGamePracticumPROJECT/x64
 .vs/*
 Debug/*
+
 
 *.d
 
